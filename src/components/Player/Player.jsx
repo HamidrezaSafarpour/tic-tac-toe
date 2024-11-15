@@ -16,11 +16,7 @@ export default function Player({ name, symbol }) {
         )}
         <span className="player-symbol">{symbol}</span>
       </span>
-      {!isEditing ? (
-        <button onClick={handleEditing}>Edit</button>
-      ) : (
-        <button onClick={handleEditing}>Save</button>
-      )}
+      <button onClick={handleEditing}>{!isEditing ? "Edit" : "Save"}</button>
     </li>
   );
 }
