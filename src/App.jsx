@@ -6,7 +6,7 @@ function App() {
   const [activePlayer, setActivePlayer] = useState("X");
 
   function handleSelectedButton() {
-    setActivePlayer((curActivePlayer) => (curActivePlayer === "X" ? "O" : "X"));
+    setActivePlayer((prevState) => (prevState === "X" ? "O" : "X"));
   }
 
   return (
