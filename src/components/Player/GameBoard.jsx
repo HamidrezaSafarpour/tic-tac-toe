@@ -11,10 +11,8 @@ export default function GameBoard({ onSelectButton, activePlayerSymbol }) {
 
   function handleSelectedButton(rowIndex, colIndex) {
     setGameBoard((prevGameBoard) => {
-      const updatedArray = [
-        ...prevGameBoard.map((innerArray) => [...innerArray]),
-      ];
-      updatedArray[rowIndex][colIndex] = { activePlayerSymbol };
+      const updatedArray = prevGameBoard;
+      updatedArray[rowIndex][colIndex] = activePlayerSymbol;
       return updatedArray;
     });
     onSelectButton();
