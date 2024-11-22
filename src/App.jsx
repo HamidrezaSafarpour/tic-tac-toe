@@ -26,7 +26,7 @@ function App() {
 
   const activePlayer = deriveActivePlayer(gameTurns);
 
-  let gameBoard = [...initialGameBoard];
+  let gameBoard = [...initialGameBoard.map((array) => [...array])];
   if (gameTurns.length == 0) {
     gameBoard = initialGameBoard;
   }
