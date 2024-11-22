@@ -2,6 +2,14 @@ import { useState } from "react";
 import GameBoard from "./components/GameBoard";
 import Player from "./components/Player/Player";
 import Log from "./components/Log";
+import { WINNING_COMBINATIONS } from "./winning-combinations.js";
+import GameOver from "./components/GameOver.jsx";
+
+const initialGameBoard = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+];
 
 function deriveActivePlayer(gameTurns) {
   let currentPlayer = "X";
@@ -17,6 +25,37 @@ function App() {
   // const [activePlayer, setActivePlayer] = useState("X");
 
   const activePlayer = deriveActivePlayer(gameTurns);
+
+  let gameBoard = [...initialGameBoard];
+  if (gameTurns.length == 0) {
+    gameBoard = initialGameBoard;
+  }
+  for (const turn of gameTurns) {
+    const { square, player } = turn;
+    const { row, col } = square;
+    gameBoard[row][col] = player;
+  }
+
+  let winner;
+
+  for (const combintation of WINNING_COMBINATIONS) {
+    const firstSquareSymbol =
+      gameBoard[combintation[0].row][combintation[0].column];
+    const secondSquareSymbol =
+      gameBoard[combintation[1].row][combintation[1].column];
+    const thirdSquareSymbol =
+      gameBoard[combintation[2].row][combintation[2].column];
+
+    if (
+      firstSquareSymbol &&
+      firstSquareSymbol === secondSquareSymbol &&
+      firstSquareSymbol === thirdSquareSymbol
+    ) {
+      winner = firstSquareSymbol;
+    }
+  }
+
+  const hasDraw = gameTurns.length === 9 && !winner;
 
   function handleSelectedButton(rowIndex, colIndex) {
     // setActivePlayer((prevState) => (prevState === "X" ? "O" : "X"));
@@ -34,6 +73,10 @@ function App() {
     });
   }
 
+  function handleRestart() {
+    setGameTurns([]);
+  }
+
   return (
     <main>
       <div id="game-container">
@@ -49,7 +92,10 @@ function App() {
             isActive={activePlayer === "O"}
           />
         </ol>
-        <GameBoard onSelectButton={handleSelectedButton} turns={gameTurns} />
+        {(winner || hasDraw) && (
+          <GameOver winner={winner} onRestart={handleRestart} />
+        )}
+        <GameBoard onSelectButton={handleSelectedButton} board={gameBoard} />
       </div>
       <Log turns={gameTurns} />
     </main>
