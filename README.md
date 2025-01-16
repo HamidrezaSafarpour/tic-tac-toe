@@ -11,7 +11,7 @@ A simple and interactive **Tic-Tac-Toe** game built with **React** and **Vite**.
 ## Project Structure 📂
 
 ``` bash
-ic-tac-toe-main/
+tic-tac-toe-main/
 ├── public
 ├── src/
 │ ├── assets/
